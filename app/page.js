@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { getSiteContent } from "@/lib/content";
 import { IconFace, IconDroplet, IconFoot, IconHeart, IconStar, IconClock, IconSpark } from "@/components/Icons";
 import HeroVideo from "@/components/HeroVideo";
+import { formatStory } from "@/lib/formatStory";
 
 export const revalidate = 60;
 
@@ -157,13 +158,21 @@ export default async function HomePage() {
               </div>
 
               <div className="animate-fade-up [animation-delay:180ms]">
-                <div className="space-y-4 text-[17px] leading-relaxed text-ink/80">
-                  {content.about_text.split("\n\n").map((paragraph, i) => (
-                    <p key={i} className={i === 0 ? "font-display text-xl italic text-sage-800" : ""}>
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+                {(() => {
+                  const { lead, paragraphs } = formatStory(content.about_text);
+                  return (
+                    <>
+                      <p className="font-display text-2xl italic leading-snug text-sage-800">
+                        {lead}
+                      </p>
+                      <div className="mt-5 max-w-[62ch] space-y-4 text-[16px] leading-[1.85] text-ink/75">
+                        {paragraphs.map((paragraph, i) => (
+                          <p key={i}>{paragraph}</p>
+                        ))}
+                      </div>
+                    </>
+                  );
+                })()}
                 <div className="mt-8 flex items-center gap-4 border-t border-sage-200 pt-6">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sage-100 font-display text-lg text-sage-700">
                     {initials(content.owner_name)}

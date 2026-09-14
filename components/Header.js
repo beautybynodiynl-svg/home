@@ -15,20 +15,20 @@ export default function Header({ phone }) {
 
   return (
     <header className="sticky top-0 z-20 border-b border-sage-200/70 bg-sage-50/90 backdrop-blur">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-5">
+      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2.5"
         >
-          <img src="/images/logo.png" alt="Beauty by Nodiy" className="h-14 w-14 object-contain" />
-          <span className="hidden font-display text-lg tracking-tight text-sage-800 sm:inline">
+          <img src="/images/logo.png" alt="Beauty by Nodiy" className="h-20 w-20 object-contain" />
+          <span className="hidden font-display text-xl tracking-tight text-sage-800 sm:inline">
             Beauty by Nodiy
           </span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 font-body text-[15px] text-sage-800 md:flex">
+        <nav className="hidden items-center gap-7 font-body text-base text-sage-800 md:flex">
           {NAV_LINKS.map((l) => (
             <Link key={l.href} href={l.href} className="transition-colors hover:text-sage-600">
               {l.label}
