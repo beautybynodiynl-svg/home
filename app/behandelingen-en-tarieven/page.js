@@ -85,14 +85,14 @@ export default async function TreatmentsPage() {
                   </div>
                   <ul className="mt-4 divide-y divide-sage-100">
                     {items.map((item) => (
-                      <li key={item.id} className="flex items-baseline justify-between gap-4 py-3">
+                      <li key={item.id} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
                         <div className="min-w-0">
-                          <p className="truncate text-[15px] text-ink">{item.name}</p>
+                          <p className="text-[15px] text-ink">{item.name}</p>
                           {item.description && (
                             <p className="mt-0.5 text-xs text-ink/55">{item.description}</p>
                           )}
                         </div>
-                        <div className="shrink-0 text-right">
+                        <div className="flex shrink-0 items-baseline gap-2 sm:flex-col sm:items-end sm:gap-0 sm:text-right">
                           <p className="font-display text-base text-sage-800">{item.price}</p>
                           {item.duration && (
                             <p className="text-xs text-ink/50">{item.duration}</p>
