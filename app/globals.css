@@ -21,6 +21,13 @@ body {
   outline-offset: 3px;
 }
 
+.text-gradient-sage {
+  background-image: linear-gradient(100deg, #3E5943 0%, #6F9C61 55%, #8FB582 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
