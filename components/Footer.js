@@ -1,10 +1,12 @@
+import Link from "next/link";
 import { IconLeaf, IconPin, IconPhone, IconMail } from "@/components/Icons";
+import { TREATMENT_PAGES } from "@/lib/treatmentPages";
 
 export default function Footer({ content }) {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-sage-200/70 bg-sand-100">
-      <div className="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-3">
+      <div className="mx-auto grid max-w-5xl gap-10 px-6 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="flex items-center gap-2 font-display text-lg text-sage-800">
             <img src="/images/logo.png" alt="Beauty by Nodiy" className="h-10 w-10 object-contain" />
@@ -13,6 +15,24 @@ export default function Footer({ content }) {
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-ink/60">
             Allround schoonheidssalon in Nieuwegein. Persoonlijke aandacht, vakkundige behandelingen.
           </p>
+        </div>
+
+        <div className="text-sm text-ink/70">
+          <p className="mb-3 font-medium text-sage-800">Behandelingen</p>
+          <ul className="space-y-2.5">
+            {TREATMENT_PAGES.map((p) => (
+              <li key={p.slug}>
+                <Link href={`/behandelingen/${p.slug}`} className="hover:text-sage-700">
+                  {p.name}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link href="/behandelingen-en-tarieven" className="text-sage-700 hover:text-sage-800">
+                Alle tarieven →
+              </Link>
+            </li>
+          </ul>
         </div>
 
         <div className="text-sm text-ink/70">
@@ -37,9 +57,9 @@ export default function Footer({ content }) {
           </ul>
         </div>
 
-        <div className="text-sm text-ink/70 sm:text-right">
-          <p className="mb-3 font-medium text-sage-800 sm:text-right">Openingsuren</p>
-          <p className="text-ink/50">Bel of mail voor een afspraak — <br className="hidden sm:block" />reageer meestal dezelfde dag.</p>
+        <div className="text-sm text-ink/70">
+          <p className="mb-3 font-medium text-sage-800">Openingsuren</p>
+          <p className="text-ink/50">Bel of mail voor een afspraak — reageer meestal dezelfde dag.</p>
           <p className="mt-3 text-xs text-ink/40">Anbos-nr: {content.anbos_nr}</p>
         </div>
       </div>
