@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import FaqAccordion from "@/components/FaqAccordion";
 import { getSiteContent, getTreatments, groupByCategory } from "@/lib/content";
 import { TREATMENT_PAGES, getTreatmentPage } from "@/lib/treatmentPages";
-import { IconFace, IconDroplet, IconFoot, IconSpark, IconCheck, IconLeaf, IconStar } from "@/components/Icons";
+import { IconFace, IconDroplet, IconFoot, IconSpark, IconCheck, IconLeaf, IconStar, IconHeart } from "@/components/Icons";
 
 export const revalidate = 60;
 
@@ -24,6 +24,14 @@ export async function generateMetadata({ params }) {
   };
 }
 
+function splitIntoParagraphs(text) {
+  return text
+    .replace(/\r\n/g, "\n")
+    .split(/\n\s*\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
+
 export default async function TreatmentPage({ params }) {
   const page = getTreatmentPage(params.slug);
   if (!page) notFound();
@@ -33,6 +41,7 @@ export default async function TreatmentPage({ params }) {
   const grouped = groupByCategory(relevant);
   const Icon = PAGE_ICONS[page.icon] || IconStar;
   const otherPages = TREATMENT_PAGES.filter((p) => p.slug !== page.slug);
+  const [leadParagraph, ...restParagraphs] = splitIntoParagraphs(page.intro);
 
   return (
     <>
@@ -76,71 +85,126 @@ export default async function TreatmentPage({ params }) {
               </a>
             </div>
           </div>
+
+          <svg className="relative block w-full text-sand-100" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+            <path fill="currentColor" d="M0,32 C360,0 1080,64 1440,24 L1440,60 L0,60 Z" />
+          </svg>
         </section>
 
-        {/* Intro */}
+        {/* Intro — met organische blob-illustratie, zoals de "Over"-sectie op de homepage */}
         <section className="bg-sand-100">
-          <div className="mx-auto max-w-2xl px-6 py-14">
-            <p className="text-[16.5px] leading-[1.85] text-ink/80">{page.intro}</p>
+          <div className="mx-auto max-w-5xl px-6 py-16">
+            <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+              <div className="relative mx-auto w-full max-w-[260px] lg:sticky lg:top-24">
+                <svg viewBox="0 0 400 400" className="h-full w-full" aria-hidden="true">
+                  <path
+                    fill="#CFE0C4"
+                    d="M320.5,290.5Q291,381,193.5,347Q96,313,68,213.5Q40,114,135,73.5Q230,33,296,102.5Q362,172,320.5,290.5Z"
+                  />
+                  <path
+                    fill="#8FB582"
+                    opacity="0.5"
+                    d="M270,260Q246,320,175,300Q104,280,100,205Q96,130,166,110Q236,90,268,155Q300,220,270,260Z"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Icon className="h-14 w-14 text-sage-800" />
+                </div>
+                <span className="absolute -right-2 top-4 h-6 w-6 rounded-full bg-sand-200 animate-float" />
+                <span className="absolute -left-2 bottom-8 h-8 w-8 rounded-full bg-sage-300/70 animate-float-slow" />
+              </div>
+
+              <div>
+                <p className="font-display text-xl italic leading-snug text-sage-800">{leadParagraph}</p>
+                <div className="mt-5 max-w-[62ch] space-y-4 text-[15.5px] leading-[1.85] text-ink/75">
+                  {restParagraphs.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Voor wie */}
-        <section className="mx-auto max-w-2xl px-6 py-14">
-          <h2 className="font-display text-2xl text-sage-800">Voor wie is dit?</h2>
-          <ul className="mt-6 space-y-3.5">
+        {/* Voor wie — icoon-kaartjes i.p.v. platte lijst */}
+        <section className="mx-auto max-w-5xl px-6 py-16">
+          <div className="flex items-center gap-2.5">
+            <IconHeart className="h-5 w-5 text-sage-500" />
+            <h2 className="font-display text-2xl text-sage-800">Voor wie is dit?</h2>
+          </div>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {page.forWho.map((t) => (
-              <li key={t} className="flex items-start gap-2.5 text-[15px] text-ink/75">
-                <IconCheck className="mt-0.5 h-4 w-4 shrink-0 text-sage-600" />
-                {t}
-              </li>
+              <div key={t} className="flex items-start gap-3 rounded-2xl bg-paper p-5 shadow-sm ring-1 ring-sage-100">
+                <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sage-100 text-sage-700">
+                  <IconCheck className="h-3.5 w-3.5" />
+                </div>
+                <p className="text-[15px] text-ink/75">{t}</p>
+              </div>
             ))}
-          </ul>
+          </div>
         </section>
 
         {/* Wat kun je verwachten */}
-        <section className="bg-sage-100/60">
-          <div className="mx-auto max-w-2xl px-6 py-14">
-            <h2 className="font-display text-2xl text-sage-800">Wat kun je verwachten</h2>
-            <ul className="mt-6 space-y-3.5">
+        <section className="relative overflow-hidden bg-sage-100/60">
+          <svg className="pointer-events-none absolute -left-16 -top-16 h-64 w-64 text-sage-200/70" viewBox="0 0 200 200" aria-hidden="true">
+            <path fill="currentColor" d="M141,7Q173,45,168,90Q163,135,124,159Q85,183,48,157Q11,131,17,85Q23,39,64,17Q105,-5,141,7Z" />
+          </svg>
+          <div className="relative mx-auto max-w-5xl px-6 py-16">
+            <div className="flex items-center gap-2.5">
+              <IconDroplet className="h-5 w-5 text-sage-500" />
+              <h2 className="font-display text-2xl text-sage-800">Wat kun je verwachten</h2>
+            </div>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {page.whatToExpect.map((t) => (
-                <li key={t} className="flex items-start gap-2.5 text-[15px] text-ink/75">
-                  <IconCheck className="mt-0.5 h-4 w-4 shrink-0 text-sage-600" />
-                  {t}
-                </li>
+                <div key={t} className="flex items-start gap-3 rounded-2xl bg-paper p-5 shadow-sm ring-1 ring-sage-100">
+                  <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sage-100 text-sage-700">
+                    <IconCheck className="h-3.5 w-3.5" />
+                  </div>
+                  <p className="text-[15px] text-ink/75">{t}</p>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
 
-        {/* Hoe het werkt */}
-        <section className="mx-auto max-w-2xl px-6 py-14">
+        {/* Hoe het werkt — met verbindend gestippeld lijntje tussen de stappen */}
+        <section className="mx-auto max-w-5xl px-6 py-16">
           <h2 className="font-display text-2xl text-sage-800">Hoe het werkt</h2>
-          <div className="mt-8 grid gap-8 sm:grid-cols-3">
-            {page.steps.map((s, i) => (
-              <div key={s.title}>
-                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-sage-300 font-display text-[15px] text-sage-700">
-                  {i + 1}
+          <div className="relative mt-10">
+            <svg
+              className="pointer-events-none absolute left-0 right-0 top-[18px] hidden h-4 w-full sm:block"
+              viewBox="0 0 600 16"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <line x1="60" y1="8" x2="540" y2="8" stroke="#AFC9A4" strokeWidth="2" strokeDasharray="2 10" strokeLinecap="round" />
+            </svg>
+            <div className="relative grid gap-8 sm:grid-cols-3">
+              {page.steps.map((s, i) => (
+                <div key={s.title}>
+                  <div className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-sage-300 bg-sand-100 font-display text-[15px] text-sage-700 sm:bg-paper">
+                    {i + 1}
+                  </div>
+                  <h3 className="mt-3 font-display text-lg text-sage-800">{s.title}</h3>
+                  <p className="mt-1.5 text-[14.5px] text-ink/65">{s.text}</p>
                 </div>
-                <h3 className="mt-3 font-display text-lg text-sage-800">{s.title}</h3>
-                <p className="mt-1.5 text-[14.5px] text-ink/65">{s.text}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
         {/* Live prijzen uit Supabase */}
         {Object.keys(grouped).length > 0 && (
           <section id="tarieven" className="scroll-mt-20 bg-sand-100">
-            <div className="mx-auto max-w-2xl px-6 py-14">
+            <div className="mx-auto max-w-2xl px-6 py-16">
               <h2 className="font-display text-2xl text-sage-800">Tarieven</h2>
-              <div className="mt-8 space-y-10">
+              <div className="mt-8 space-y-6">
                 {Object.entries(grouped).map(([category, items]) => (
-                  <div key={category}>
+                  <div key={category} className="rounded-2xl bg-paper p-6 shadow-sm ring-1 ring-sage-100 sm:p-7">
                     {Object.keys(grouped).length > 1 && (
                       <h3 className="font-display text-lg text-sage-700">{category}</h3>
                     )}
-                    <ul className="mt-3 divide-y divide-sage-200/70">
+                    <ul className="mt-3 divide-y divide-sage-100">
                       {items.map((item) => (
                         <li key={item.id} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
                           <div className="min-w-0">
@@ -165,7 +229,7 @@ export default async function TreatmentPage({ params }) {
         )}
 
         {/* FAQ */}
-        <section className="mx-auto max-w-2xl px-6 py-14">
+        <section className="mx-auto max-w-2xl px-6 py-16">
           <h2 className="font-display text-2xl text-sage-800">Veelgestelde vragen</h2>
           <div className="mt-6">
             <FaqAccordion items={page.faqs} />
