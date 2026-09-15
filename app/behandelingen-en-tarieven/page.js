@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import BookTreatmentButton from "@/components/BookTreatmentButton";
 import { getSiteContent, getTreatments, groupByCategory } from "@/lib/content";
 import { IconFace, IconFoot, IconDroplet, IconSpark, IconLeaf } from "@/components/Icons";
 
@@ -85,18 +86,21 @@ export default async function TreatmentsPage() {
                   </div>
                   <ul className="mt-4 divide-y divide-sage-100">
                     {items.map((item) => (
-                      <li key={item.id} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                      <li key={item.id} className="relative flex flex-col gap-1 py-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                         <div className="min-w-0">
                           <p className="text-[15px] text-ink">{item.name}</p>
                           {item.description && (
                             <p className="mt-0.5 text-xs text-ink/55">{item.description}</p>
                           )}
                         </div>
-                        <div className="flex shrink-0 items-baseline gap-2 sm:flex-col sm:items-end sm:gap-0 sm:text-right">
-                          <p className="font-display text-base text-sage-800">{item.price}</p>
-                          {item.duration && (
-                            <p className="text-xs text-ink/50">{item.duration}</p>
-                          )}
+                        <div className="flex shrink-0 items-center gap-3">
+                          <div className="text-right">
+                            <p className="font-display text-base text-sage-800">{item.price}</p>
+                            {item.duration && (
+                              <p className="text-xs text-ink/50">{item.duration}</p>
+                            )}
+                          </div>
+                          <BookTreatmentButton treatmentName={item.name} price={item.price} whatsappNumber={content.whatsapp_number} />
                         </div>
                       </li>
                     ))}

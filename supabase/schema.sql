@@ -79,6 +79,7 @@ Je bent van harte welkom om een keer langs te komen in mijn salon!'),
   ('anbos_nr', '28657'),
   ('address', 'Koekoekslaan 2B, 3435 CL, Nieuwegein'),
   ('phone', '06 81517780'),
+  ('whatsapp_number', '31681517780'),
   ('email', 'shabana@beautybynodiy.nl')
 on conflict (key) do nothing;
 

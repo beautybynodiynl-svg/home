@@ -12,6 +12,7 @@ const CONTENT_FIELDS = [
   { key: "anbos_nr", label: "Anbos-nummer", type: "text" },
   { key: "address", label: "Adres", type: "text" },
   { key: "phone", label: "Telefoonnummer", type: "text" },
+  { key: "whatsapp_number", label: "WhatsApp-nummer (alleen cijfers, met landcode, bv. 31681517780)", type: "text" },
   { key: "email", label: "E-mailadres", type: "text" },
 ];
 
