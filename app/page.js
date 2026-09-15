@@ -83,16 +83,19 @@ export default async function HomePage() {
         <section className="mx-auto max-w-5xl px-6 py-16">
           <div className="grid gap-6 sm:grid-cols-3">
             <ServiceCard
+              href="/behandelingen/gezichtsbehandelingen"
               icon={<IconFace className="h-7 w-7" />}
               title="Gezichtsbehandelingen"
               text="Van een basis gezichtsbehandeling tot aan micro dermabrasie en peeling. Dit is bij NoDiy mogelijk."
             />
             <ServiceCard
+              href="/behandelingen/lichaam"
               icon={<IconSpark className="h-7 w-7" />}
               title="Lichaam"
               text="Laserontharing, harsen, kruidenpeeling en meer. Benieuwd? Bel voor de mogelijkheden bij NoDiy."
             />
             <ServiceCard
+              href="/behandelingen/medische-pedicure"
               icon={<IconFoot className="h-7 w-7" />}
               title="Medische pedicure"
               text="Vraag gerust naar de mogelijkheden. Bij een medische pedicure is intake verplicht."
@@ -193,15 +196,16 @@ export default async function HomePage() {
   );
 }
 
-function ServiceCard({ icon, title, text }) {
+function ServiceCard({ href, icon, title, text }) {
   return (
-    <div className="group rounded-2xl bg-paper p-6 shadow-sm ring-1 ring-sage-100 transition-shadow hover:shadow-md">
+    <Link href={href} className="group rounded-2xl bg-paper p-6 shadow-sm ring-1 ring-sage-100 transition-shadow hover:shadow-md">
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sage-100 text-sage-700 transition-colors group-hover:bg-sage-200">
         {icon}
       </div>
-      <h3 className="mt-4 font-display text-xl text-sage-800">{title}</h3>
+      <h3 className="mt-4 font-display text-xl text-sage-800 group-hover:text-sage-700">{title}</h3>
       <p className="mt-2 text-[15px] leading-relaxed text-ink/70">{text}</p>
-    </div>
+      <span className="mt-3 inline-block text-sm text-sage-600 opacity-0 transition-opacity group-hover:opacity-100">Meer info →</span>
+    </Link>
   );
 }
 
